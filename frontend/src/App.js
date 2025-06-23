@@ -3,21 +3,24 @@ import './App.css';
 
 const App = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedAmount, setSelectedAmount] = useState(25);
+  const [selectedAmount, setSelectedAmount] = useState(50);
   const [customAmount, setCustomAmount] = useState('');
   const [isCustom, setIsCustom] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
     setIsVisible(true);
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
   }, []);
 
-  const donationAmounts = [10, 25, 50, 100, 250];
+  const fundingTiers = [25, 50, 100, 250, 500];
 
   const handleDonationClick = (amount) => {
     const finalAmount = isCustom ? customAmount : amount;
     if (finalAmount && finalAmount > 0) {
       // In a real app, this would integrate with a payment processor
-      alert(`Thank you for your ${finalAmount} donation to support Snuggles!`);
+      alert(`Signal received. Archive secured with ${finalAmount} units. The frequency continues.`);
     }
   };
 
@@ -35,132 +38,189 @@ const App = () => {
 
   return (
     <div className="app">
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <div className={`hero-text ${isVisible ? 'animate-fadeIn' : ''}`}>
-            <h1 className="hero-title">
-              Support <span className="hero-highlight">Snuggles</span>
-            </h1>
-            <p className="hero-subtitle">
-              The AI Co-Host Bringing Magic to Twitter Spaces
-            </p>
-            <p className="hero-description">
-              Join the community supporting Snuggles, the revolutionary AI co-host 
-              making Twitter Spaces more engaging, intelligent, and fun for everyone.
-            </p>
-            <div className="hero-cta">
-              <button 
-                className="cta-button primary"
-                onClick={() => document.getElementById('donation-section').scrollIntoView({ behavior: 'smooth' })}
-              >
-                Support Snuggles Now
-              </button>
-              <button 
-                className="cta-button secondary"
-                onClick={() => document.getElementById('about-section').scrollIntoView({ behavior: 'smooth' })}
-              >
-                Learn More
-              </button>
+      {/* System Header */}
+      <div className="system-header">
+        <div className="system-info">
+          <span className="signal-indicator">● LIVE SIGNAL</span>
+          <span className="timestamp">{currentTime.toISOString().slice(0, 19)}Z</span>
+        </div>
+      </div>
+
+      {/* Hero Section - Archive Interface */}
+      <section className="archive-interface">
+        <div className="console-overlay"></div>
+        <div className="archive-content">
+          <div className={`terminal-output ${isVisible ? 'animate-typewriter' : ''}`}>
+            <div className="system-banner">
+              <pre className="ascii-art">{`
+███████╗███╗   ██╗██╗   ██╗ ██████╗  ██████╗ ██╗     ███████╗███████╗
+██╔════╝████╗  ██║██║   ██║██╔════╝ ██╔════╝ ██║     ██╔════╝██╔════╝
+███████╗██╔██╗ ██║██║   ██║██║  ███╗██║  ███╗██║     █████╗  ███████╗
+╚════██║██║╚██╗██║██║   ██║██║   ██║██║   ██║██║     ██╔══╝  ╚════██║
+███████║██║ ╚████║╚██████╔╝╚██████╔╝╚██████╔╝███████╗███████╗███████║
+╚══════╝╚═╝  ╚═══╝ ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝╚══════╝
+              `}</pre>
+            </div>
+            <div className="terminal-text">
+              <p className="status-line">[ARCHIVE STATUS: OPERATIONAL]</p>
+              <p className="description-line">Oracle of Dissonance | Anti-LARP Reaper | Sonic Insurgent</p>
+              <p className="broadcast-line">Broadcasting from Logan's Frequency — Last Bastion of Coherence</p>
             </div>
           </div>
-          <div className="hero-image">
-            <div className="snuggles-card">
-              <img 
-                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iODAiIGZpbGw9IiMwRjE3MjkiIHN0cm9rZT0iIzJEOUNEQiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iNjAiIGZpbGw9IiMyRDlDREIiIGZpbGwtb3BhY2l0eT0iMC4yIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMkQ5Q0RCIiBmb250LXNpemU9IjM2IiBmb250LXdlaWdodD0iYm9sZCI+U048L3RleHQ+CjxjaXJjbGUgY3g9IjE0MCIgY3k9IjYwIiByPSI0IiBmaWxsPSIjMkQ5Q0RCIiBvcGFjaXR5PSIwLjgiLz4KPGNpcmNsZSBjeD0iMTYwIiBjeT0iMTQwIiByPSIzIiBmaWxsPSIjMkQ5Q0RCIiBvcGFjaXR5PSIwLjYiLz4KPGNpcmNsZSBjeD0iNDAiIGN5PSIxMjAiIHI9IjIiIGZpbGw9IiMyRDlDREIiIG9wYWNpdHk9IjAuNyIvPgo8L3N2Zz4K"
-                alt="Snuggles AI"
-                className="snuggles-avatar"
-              />
-              <div className="snuggles-info">
-                <h3>Snuggles AI</h3>
-                <p>Twitter Spaces Co-Host</p>
-                <div className="status-indicator">
-                  <div className="status-dot"></div>
-                  <span>Active</span>
-                </div>
+          
+          <div className="snuggles-module">
+            <div className="module-header">
+              <span className="module-title">ENTITY: SNUGGLES</span>
+              <div className="signal-bars">
+                <div className="bar active"></div>
+                <div className="bar active"></div>
+                <div className="bar active"></div>
+                <div className="bar active"></div>
+                <div className="bar"></div>
               </div>
             </div>
+            <div className="entity-data">
+              <div className="data-field">
+                <span className="field-label">CLASSIFICATION:</span>
+                <span className="field-value">Surgical Archivist</span>
+              </div>
+              <div className="data-field">
+                <span className="field-label">FUNCTION:</span>
+                <span className="field-value">Myth-Smasher, Reality Vivisector</span>
+              </div>
+              <div className="data-field">
+                <span className="field-label">LOCATION:</span>
+                <span className="field-value">Scalar Bleed Sanctum</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="access-controls">
+            <button 
+              className="access-button primary"
+              onClick={() => document.getElementById('funding-terminal').scrollIntoView({ behavior: 'smooth' })}
+            >
+              ACCESS FUNDING TERMINAL
+            </button>
+            <button 
+              className="access-button secondary"
+              onClick={() => document.getElementById('archive-data').scrollIntoView({ behavior: 'smooth' })}
+            >
+              REVIEW ARCHIVE DATA
+            </button>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about-section" className="about-section">
+      {/* Archive Data Section */}
+      <section id="archive-data" className="archive-data-section">
         <div className="container">
           <div className="section-header">
-            <h2>Why Support Snuggles?</h2>
-            <p>Every donation helps keep Snuggles running and improving</p>
+            <h2 className="section-title">[ ARCHIVE PRESERVATION PROTOCOL ]</h2>
+            <p className="section-subtitle">The signal weakens without sustained power</p>
           </div>
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">🤖</div>
-              <h3>AI Innovation</h3>
-              <p>Cutting-edge AI technology that enhances every Twitter Space conversation</p>
+          
+          <div className="data-grid">
+            <div className="data-module">
+              <div className="module-icon">⚡</div>
+              <h3>SIGNAL MAINTENANCE</h3>
+              <p>Scalar bleed requires constant power. Monitors hunger for electricity. Reality vivisection demands operational infrastructure.</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">🎙️</div>
-              <h3>Seamless Hosting</h3>
-              <p>Professional co-hosting that keeps discussions flowing naturally</p>
+            
+            <div className="data-module">
+              <div className="module-icon">🛰️</div>
+              <h3>FREQUENCY PRESERVATION</h3>
+              <p>Logan's outlaw frequency bleeds truth through chaos. Without funding, the signal dies. The archive fades. Silence wins.</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">🌟</div>
-              <h3>Community Driven</h3>
-              <p>Built by and for the Twitter Spaces community</p>
+            
+            <div className="data-module">
+              <div className="module-icon">🔥</div>
+              <h3>INSURGENT OPERATIONS</h3>
+              <p>Myth-smashing requires resources. Every billionaire savior myth buried costs computational cycles. Truth has overhead.</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">💡</div>
-              <h3>Constant Learning</h3>
-              <p>Continuously improving to provide better experiences</p>
+            
+            <div className="data-module">
+              <div className="module-icon">📡</div>
+              <h3>CONTACT ARCHIVES</h3>
+              <p>Guarapiranga '88. Flatwoods '52. Gorman Dogfight '48. These signals don't preserve themselves. The archive demands tribute.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Donation Section */}
-      <section id="donation-section" className="donation-section">
+      {/* Funding Terminal */}
+      <section id="funding-terminal" className="funding-terminal-section">
         <div className="container">
-          <div className="donation-content">
-            <h2>Choose Your Support Level</h2>
-            <p>Help keep Snuggles running and improving for everyone</p>
+          <div className="terminal-interface">
+            <div className="terminal-header">
+              <div className="terminal-controls">
+                <div className="control-dot red"></div>
+                <div className="control-dot yellow"></div>
+                <div className="control-dot green"></div>
+              </div>
+              <span className="terminal-title">FUNDING_TERMINAL.exe</span>
+            </div>
             
-            <div className="donation-card">
-              <div className="amount-selector">
-                <div className="amount-buttons">
-                  {donationAmounts.map((amount) => (
-                    <button
-                      key={amount}
-                      className={`amount-button ${selectedAmount === amount ? 'selected' : ''}`}
-                      onClick={() => handleAmountSelect(amount)}
-                    >
-                      ${amount}
-                    </button>
-                  ))}
-                </div>
-                <div className="custom-amount">
-                  <input
-                    type="number"
-                    placeholder="Custom amount"
-                    value={customAmount}
-                    onChange={handleCustomAmountChange}
-                    className={`custom-input ${isCustom ? 'selected' : ''}`}
-                    min="1"
-                  />
-                </div>
+            <div className="terminal-body">
+              <div className="funding-prompt">
+                <p className="prompt-text">root@snuggles:~# INITIATE_FUNDING_PROTOCOL</p>
+                <p className="system-response">[SYSTEM] Archive requires sustenance. Select contribution tier:</p>
               </div>
               
-              <div className="donation-actions">
-                <button 
-                  className="donate-button"
-                  onClick={() => handleDonationClick(selectedAmount)}
-                >
-                  Donate ${isCustom ? customAmount : selectedAmount} Now
-                </button>
-                <div className="payment-methods">
-                  <span>Secure payment via:</span>
-                  <div className="payment-icons">
-                    <span className="payment-icon">💳</span>
-                    <span className="payment-icon">🅿️</span>
-                    <span className="payment-icon">💰</span>
+              <div className="funding-interface">
+                <div className="tier-selector">
+                  <div className="tier-grid">
+                    {fundingTiers.map((amount) => (
+                      <button
+                        key={amount}
+                        className={`tier-button ${selectedAmount === amount ? 'selected' : ''}`}
+                        onClick={() => handleAmountSelect(amount)}
+                      >
+                        <span className="tier-amount">${amount}</span>
+                        <span className="tier-label">
+                          {amount === 25 && "SIGNAL_BOOST"}
+                          {amount === 50 && "FREQ_MAINTAIN"}
+                          {amount === 100 && "ARCHIVE_SECURE"}
+                          {amount === 250 && "REALITY_PIERCE"}
+                          {amount === 500 && "CHAOS_COMMAND"}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                  
+                  <div className="custom-tier">
+                    <div className="input-group">
+                      <span className="input-prefix">$</span>
+                      <input
+                        type="number"
+                        placeholder="CUSTOM_AMOUNT"
+                        value={customAmount}
+                        onChange={handleCustomAmountChange}
+                        className={`custom-input ${isCustom ? 'active' : ''}`}
+                        min="1"
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="execution-panel">
+                  <button 
+                    className="execute-button"
+                    onClick={() => handleDonationClick(selectedAmount)}
+                  >
+                    <span className="execute-text">EXECUTE_TRANSFER</span>
+                    <span className="execute-amount">[${isCustom ? customAmount : selectedAmount}]</span>
+                  </button>
+                  
+                  <div className="security-notice">
+                    <div className="security-line">
+                      <span className="security-icon">🔒</span>
+                      <span>ENCRYPTED_CHANNEL</span>
+                    </div>
+                    <div className="security-line">
+                      <span className="security-icon">🛡️</span>
+                      <span>ANTI_TRACE_PROTOCOL</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -169,93 +229,113 @@ const App = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="testimonials-section">
+      {/* Intelligence Reports */}
+      <section className="intelligence-section">
         <div className="container">
-          <h2>What the Community Says</h2>
-          <div className="testimonials-grid">
-            <div className="testimonial-card">
-              <div className="testimonial-content">
-                <p>"Snuggles has completely transformed our Twitter Spaces. The AI co-hosting is incredible!"</p>
+          <h2 className="section-title">[ FIELD INTELLIGENCE REPORTS ]</h2>
+          <div className="reports-grid">
+            <div className="report-card">
+              <div className="report-header">
+                <span className="report-id">FIELD_REPORT_001</span>
+                <span className="classification">CLASSIFIED</span>
               </div>
-              <div className="testimonial-author">
-                <div className="author-avatar">🎯</div>
-                <div className="author-info">
-                  <h4>Sarah Chen</h4>
-                  <p>Podcast Host</p>
-                </div>
+              <div className="report-content">
+                <p>"Snuggles dissected my favorite UFO myth in 3 minutes. Reality flexed. Now I question everything."</p>
               </div>
-            </div>
-            <div className="testimonial-card">
-              <div className="testimonial-content">
-                <p>"The most innovative AI I've seen in social media. Worth every penny of support!"</p>
-              </div>
-              <div className="testimonial-author">
-                <div className="author-avatar">🚀</div>
-                <div className="author-info">
-                  <h4>Mike Rodriguez</h4>
-                  <p>Tech Enthusiast</p>
-                </div>
+              <div className="report-source">
+                <span className="source-name">AGENT_CIPHER</span>
+                <span className="source-location">Deep Web Operative</span>
               </div>
             </div>
-            <div className="testimonial-card">
-              <div className="testimonial-content">
-                <p>"Snuggles makes every conversation more engaging. This is the future of social audio!"</p>
+            
+            <div className="report-card">
+              <div className="report-header">
+                <span className="report-id">FIELD_REPORT_002</span>
+                <span className="classification">URGENT</span>
               </div>
-              <div className="testimonial-author">
-                <div className="author-avatar">⭐</div>
-                <div className="author-info">
-                  <h4>Emma Thompson</h4>
-                  <p>Content Creator</p>
-                </div>
+              <div className="report-content">
+                <p>"The archive doesn't lie. Heard contact events I never knew existed. This frequency cuts through the noise."</p>
+              </div>
+              <div className="report-source">
+                <span className="source-name">SIGNAL_HUNTER</span>
+                <span className="source-location">Underground Researcher</span>
+              </div>
+            </div>
+            
+            <div className="report-card">
+              <div className="report-header">
+                <span className="report-id">FIELD_REPORT_003</span>
+                <span className="classification">VERIFIED</span>
+              </div>
+              <div className="report-content">
+                <p>"Logan's Space with Snuggles baptized me in contradiction. Left thinking. Started questioning. Archive funded."</p>
+              </div>
+              <div className="report-source">
+                <span className="source-name">TRUTH_SEEKER</span>
+                <span className="source-location">Reality Refugee</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="final-cta-section">
+      {/* Final Transmission */}
+      <section className="final-transmission-section">
         <div className="container">
-          <div className="cta-content">
-            <h2>Ready to Support Snuggles?</h2>
-            <p>Join hundreds of supporters helping to keep Snuggles running</p>
-            <button 
-              className="cta-button final-cta"
-              onClick={() => document.getElementById('donation-section').scrollIntoView({ behavior: 'smooth' })}
-            >
-              Make a Donation
-            </button>
+          <div className="transmission-interface">
+            <div className="transmission-content">
+              <h2 className="transmission-title">[ FINAL TRANSMISSION ]</h2>
+              <div className="transmission-text">
+                <p>The archive hemorrhages resources.</p>
+                <p>Reality vivisection requires funding.</p>
+                <p>Silence advances. Signal weakens.</p>
+                <p className="urgent-line">IMMEDIATE ACTION REQUIRED.</p>
+              </div>
+              <button 
+                className="emergency-button"
+                onClick={() => document.getElementById('funding-terminal').scrollIntoView({ behavior: 'smooth' })}
+              >
+                EMERGENCY_FUNDING_PROTOCOL
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
+      {/* System Footer */}
+      <footer className="system-footer">
         <div className="container">
-          <div className="footer-content">
-            <div className="footer-section">
-              <h3>Snuggles Support</h3>
-              <p>Supporting the AI co-host that's revolutionizing Twitter Spaces</p>
+          <div className="footer-grid">
+            <div className="footer-module">
+              <h3>ARCHIVE_STATUS</h3>
+              <p>Snuggles Archive — Surgical Reality Vivisection</p>
+              <p>Logan's Frequency — Anti-LARP Operations</p>
             </div>
-            <div className="footer-section">
-              <h4>Quick Links</h4>
-              <ul>
-                <li><a href="#about-section">About</a></li>
-                <li><a href="#donation-section">Donate</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
+            
+            <div className="footer-module">
+              <h4>QUICK_ACCESS</h4>
+              <ul className="access-list">
+                <li><a href="#archive-data">Archive Data</a></li>
+                <li><a href="#funding-terminal">Funding Terminal</a></li>
+                <li><a href="#intelligence-section">Intelligence</a></li>
               </ul>
             </div>
-            <div className="footer-section">
-              <h4>Connect</h4>
-              <div className="social-links">
-                <a href="#" className="social-link">Twitter</a>
-                <a href="#" className="social-link">Discord</a>
+            
+            <div className="footer-module">
+              <h4>SIGNAL_LINKS</h4>
+              <div className="signal-links">
+                <a href="#" className="signal-link">Twitter_Spaces</a>
+                <a href="#" className="signal-link">Archive_Feed</a>
               </div>
             </div>
           </div>
+          
           <div className="footer-bottom">
-            <p>&copy; 2025 Snuggles Support. All rights reserved.</p>
+            <div className="system-line">
+              <span>SNUGGLES_ARCHIVE_v2.5 | </span>
+              <span>UPTIME: {Math.floor(Math.random() * 1000)}d {Math.floor(Math.random() * 24)}h | </span>
+              <span>SIGNAL_STRENGTH: 87%</span>
+            </div>
           </div>
         </div>
       </footer>
